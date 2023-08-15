@@ -4,72 +4,120 @@ export class Supplier {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
+    @Column({
+        length: 40
+    })
     companyName: string;
 
-    @Column()
+    @Column({
+        length: 30
+    })
     contactFname: string;
 
-    @Column()
+    @Column({
+        length: 50
+    })
     contactLName: string;
 
-    @Column()
+    @Column({
+        length: 30
+    })
     contactTitle: string;
 
-    @Column()
+    @Column({
+        length: 60
+    })
     address1: string;
 
-    @Column()
+    @Column({
+        length: 50
+    })
     address2: string;
 
-    @Column()
+    @Column({
+        length: 15
+    })
     city: string;
 
-    @Column()
+    @Column({
+        length: 25
+    })
     state: string;
 
-    @Column()
+    @Column({
+        length: 15
+    })
     postalCode: string;
 
-    @Column()
+    @Column({
+        length: 50
+    })
     country: string;
 
-    @Column()
+    @Column({
+        length: 25
+    })
     phone: string;
 
-    @Column()
+    @Column({
+        length: 25
+    })
     fax: string;
 
-    @Column()
+    @Column({
+        length: 75
+    })
     email: string;
 
-    @Column()
+    @Column({
+        length: 100
+    })
     url: string;
 
     @Column()
-    paymentMethods: string;
+    paymentId: number;
+
+    @Column({
+        length: 100
+    })
+    discountType: string;
 
     @Column()
-    discountType: number;
+    discountRate: number;
 
     @Column()
-    typeGoods: number;
+    goodId: number;
 
-    @Column()
-    notes: string;
-
-    @Column()
+    @Column({
+        default: false
+    })
     discountAvailable: boolean;
 
-    @Column()
-    currentOrder: string;
+    @Column({
+        default: false
+    })
+    currentOrder: boolean;
 
-    @Column()
+    @Column({
+        length: 50
+    })
+    customerId: string;
+
+    @Column({
+        length: 100
+    })
+    sizeURL: string;
+
+    @Column({
+        length: 75
+    })
     logo: string;
 
     @Column()
-    customerId: number;
+    ranking: number;
 
-    @Column()
-    sizeURL: string;
+    @Column({
+        length: 255
+    })
+    notes: string;
 }
