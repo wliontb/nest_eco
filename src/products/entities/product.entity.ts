@@ -4,24 +4,18 @@ export class Product {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
-    SKU: number;
+    @Column({
+        length: 60
+    })
+    productName: string;
 
-    @Column()
-    IDSKU: number;
-
-    @Column()
-    VendorProductId: number;
-
-    @Column()
-    name: string;
-
-    @Column()
-    description: string;
+    @Column({
+        length: 255
+    })
+    productDescription: string;
 
     @Column()
     supplierId: number;
-
 
     @Column()
     categoryId: number;
@@ -29,54 +23,78 @@ export class Product {
     @Column()
     quantityPerUnit: number;
 
-    @Column()
+
+    @Column({
+        length: 20
+    })
+    unitSize: string;
+
+    @Column({
+        length: 15
+    })
     unitPrice: string;
 
     @Column()
     MSRP: string;
 
-    @Column()
+    @Column({
+        length: 50
+    })
     availableSize: string;
 
-    @Column()
+    @Column({
+        length: 100
+    })
     availableColors: string;
 
     @Column()
-    size: string;
+    sizeId: number;
 
-    @Column()
-    color: string;
+    @Column({
+        length: 50
+    })
+    colorId: string;
 
     @Column()
     discount: number;
 
     @Column()
-    unitWeight: string;
+    unitWeight: number;
 
     @Column()
-    unitsInStock: string;
+    unitsInStock: number;
 
     @Column()
-    unitsOnOrder: string;
+    unitsOnOrder: number;
 
     @Column()
-    reorderLevel: string;
+    reorderLevel: number;
 
-    @Column()
+    @Column({
+        default: true
+    })
     productAvailable: boolean;
 
-    @Column()
+    @Column({
+        default: false
+    })
     discountAvailable: boolean;
 
-    @Column()
-    currentOrder: string;
+    @Column({
+        default: false
+    })
+    currentOrder: boolean;
 
-    @Column()
+    @Column({
+        length: 50
+    })
     picture: string;
 
     @Column()
     ranking: number;
 
-    @Column()
+    @Column({
+        length: 255
+    })
     note: string;
 }
