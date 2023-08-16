@@ -10,10 +10,13 @@ import { OrderdetailsModule } from './orderdetails/orderdetails.module';
 import { ProductsModule } from './products/products.module';
 import { SuppliersModule } from './suppliers/suppliers.module';
 import { DatabaseModule } from './database/database.module';
+import { ProductdetailsModule } from './productdetails/productdetails.module';
+import { GoodsCategoryModule } from './goods-category/goods-category.module';
+import { ConfigModule } from './config/config.module'
 
 @Module({
-  imports: [CustomersModule, OrdersModule, PaymentModule, CategoryModule, ShippersModule, OrderdetailsModule, ProductsModule, SuppliersModule, DatabaseModule],
+  imports: [ConfigModule, CustomersModule, OrdersModule, PaymentModule, CategoryModule, ShippersModule, OrderdetailsModule, ProductsModule, SuppliersModule, DatabaseModule, ProductdetailsModule, GoodsCategoryModule],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }

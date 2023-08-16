@@ -26,7 +26,7 @@ services:
       context: ./mysql
     environment:
       MYSQL_HOST: '0.0.0.0'
-      MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
+      MYSQL_ROOT_PASSWORD: 'heheeco'
       MYSQL_DATABASE: eco
       MYSQL_USER: eco
       MYSQL_PASSWORD: eco

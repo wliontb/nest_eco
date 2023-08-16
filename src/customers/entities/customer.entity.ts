@@ -1,7 +1,6 @@
 import { Column, PrimaryGeneratedColumn } from "typeorm";
 
 export class Customer {
-
     @PrimaryGeneratedColumn()
     id: number;
 
@@ -49,5 +48,4 @@ export class Customer {
 
     @Column()
     dateEntered: Date;
-
 }
