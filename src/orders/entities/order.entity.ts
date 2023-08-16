@@ -1,35 +1,20 @@
-import { Column, PrimaryGeneratedColumn } from "typeorm";
+import { Customer } from "src/customers/entities/customer.entity";
+import { Orderdetail } from "src/orderdetails/entities/orderdetail.entity";
+import { Payment } from "src/payment/entities/payment.entity";
+import { Column, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 export class Order {
     @PrimaryGeneratedColumn()
     id: number;
 
     @Column()
-    customerId: number;
-
-    @Column()
     orderNumber: number;
-
-    @Column()
-    paymentId: number;
 
     @Column()
     orderDate: Date;
 
     @Column()
-    shipDate: number;
-
-    @Column()
     requiredDate: Date;
-
-    @Column()
-    shipperId: number;
-
-    @Column()
-    freight: string;
-
-    @Column()
-    salesTax: number;
     
     @Column()
     timestamp: string;
@@ -37,14 +22,15 @@ export class Order {
     @Column()
     transactStatus: string;
 
-    @Column()
-    errLoc: string;
+    @Column({
+        default: false
+    })
+    fulfilled: boolean;
 
-    @Column()
-    fulfilled: string;
-
-    @Column()
-    deleted: Date;
+    @Column({
+        default: false
+    })
+    deleted: boolean;
 
     @Column()
     paid: number;
@@ -52,4 +38,14 @@ export class Order {
     @Column()
     paymentDate: Date;
 
+    @OneToMany(() => Orderdetail, (orderdetail) => orderdetail.order)
+    orderDetails: Orderdetail[]
+
+    @OneToOne(() => Customer)
+    @JoinColumn()
+    customer: Customer;
+    
+    @OneToOne(() => Payment)
+    @JoinColumn()
+    payment: Payment
 }

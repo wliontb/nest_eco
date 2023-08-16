@@ -1,17 +1,11 @@
-import { Column, PrimaryGeneratedColumn } from "typeorm";
+import { Order } from "src/orders/entities/order.entity";
+import { Product } from "src/products/entities/product.entity";
+import { Shipper } from "src/shippers/entities/shipper.entity";
+import { Column, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 export class Orderdetail {
     @PrimaryGeneratedColumn()
     id: number;
-
-    @PrimaryGeneratedColumn()
-    orderId: number;
-
-    @PrimaryGeneratedColumn()
-    productId: number;
-
-    @Column()
-    orderNumber: number;
 
     @Column()
     price: number;
@@ -25,21 +19,42 @@ export class Orderdetail {
     @Column()
     total: number;
 
-    @Column()
-    IDSKU: number;
+    @Column({
+        length: 50
+    })
+    size: string;
 
-    @Column()
-    size: number;
-
-    @Column()
+    @Column({
+        length: 50
+    })
     color: string;
 
+    @Column({
+        default: false
+    })
+    fulfilled: boolean;
+
     @Column()
-    fulfilled: string;
+    billDate: Date;
 
     @Column()
     shipDate: Date;
 
     @Column()
-    billDate: Date;
+    freight: number
+
+    @Column()
+    salesTax: number;
+
+    @ManyToOne(() => Order, (order) => order.orderDetails)
+    @JoinColumn()
+    order: Order
+
+    @OneToOne(() => Shipper)
+    @JoinColumn()
+    shipper: Shipper
+
+    @OneToOne(() => Product)
+    @JoinColumn()
+    product: Product
 }

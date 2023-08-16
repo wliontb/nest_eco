@@ -1,4 +1,7 @@
-import { Column, PrimaryGeneratedColumn } from "typeorm";
+import { Category } from "src/category/entities/category.entity";
+import { Productdetail } from "src/productdetails/entities/productdetail.entity";
+import { Supplier } from "src/suppliers/entities/supplier.entity";
+import { Column, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 export class Product {
     @PrimaryGeneratedColumn()
@@ -15,14 +18,7 @@ export class Product {
     productDescription: string;
 
     @Column()
-    supplierId: number;
-
-    @Column()
-    categoryId: number;
-
-    @Column()
     quantityPerUnit: number;
-
 
     @Column({
         length: 20
@@ -46,14 +42,6 @@ export class Product {
         length: 100
     })
     availableColors: string;
-
-    @Column()
-    sizeId: number;
-
-    @Column({
-        length: 50
-    })
-    colorId: string;
 
     @Column()
     discount: number;
@@ -97,4 +85,17 @@ export class Product {
         length: 255
     })
     note: string;
+
+    @OneToOne(() => Supplier)
+    @JoinColumn()
+    supplier: Supplier;
+
+    @OneToOne(() => Category)
+    @JoinColumn()
+    category: Category;
+
+    @OneToMany(() => Productdetail, (productdetail) => productdetail.product)
+    @JoinColumn()
+    productdetails: Productdetail[]
+    
 }

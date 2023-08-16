@@ -1,4 +1,7 @@
-import { Column, PrimaryGeneratedColumn } from "typeorm";
+import { Customer } from "src/customers/entities/customer.entity";
+import { GoodsCategory } from "src/goods-category/entities/goods-category.entity";
+import { Payment } from "src/payment/entities/payment.entity";
+import { Column, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 export class Supplier {
     @PrimaryGeneratedColumn()
@@ -74,9 +77,6 @@ export class Supplier {
     })
     url: string;
 
-    @Column()
-    paymentId: number;
-
     @Column({
         length: 100
     })
@@ -84,9 +84,6 @@ export class Supplier {
 
     @Column()
     discountRate: number;
-
-    @Column()
-    goodId: number;
 
     @Column({
         default: false
@@ -97,11 +94,6 @@ export class Supplier {
         default: false
     })
     currentOrder: boolean;
-
-    @Column({
-        length: 50
-    })
-    customerId: string;
 
     @Column({
         length: 100
@@ -120,4 +112,16 @@ export class Supplier {
         length: 255
     })
     notes: string;
+
+    @OneToMany(() => GoodsCategory, (goodcategory) => goodcategory.supplier)
+    @JoinColumn()
+    goodCategories: GoodsCategory[];
+
+    @OneToOne(() => Customer)
+    @JoinColumn()
+    customer: Customer;
+
+    @OneToMany(() => Payment, (payment) => payment.supplier)
+    @JoinColumn()
+    payments: Payment[];
 }
