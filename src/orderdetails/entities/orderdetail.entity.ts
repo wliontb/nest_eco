@@ -1,8 +1,9 @@
 import { Order } from "src/orders/entities/order.entity";
 import { Product } from "src/products/entities/product.entity";
 import { Shipper } from "src/shippers/entities/shipper.entity";
-import { Column, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
+@Entity()
 export class Orderdetail {
     @PrimaryGeneratedColumn()
     id: number;

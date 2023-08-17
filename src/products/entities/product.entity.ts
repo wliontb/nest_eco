@@ -1,8 +1,9 @@
 import { Category } from "src/category/entities/category.entity";
 import { Productdetail } from "src/productdetails/entities/productdetail.entity";
 import { Supplier } from "src/suppliers/entities/supplier.entity";
-import { Column, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
+@Entity()
 export class Product {
     @PrimaryGeneratedColumn()
     id: number;

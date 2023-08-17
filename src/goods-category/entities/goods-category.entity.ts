@@ -1,7 +1,8 @@
 import { Category } from "src/category/entities/category.entity";
 import { Supplier } from "src/suppliers/entities/supplier.entity";
-import { Column, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
+@Entity()
 export class GoodsCategory {
     @PrimaryGeneratedColumn()
     id: number;
