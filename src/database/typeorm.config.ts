@@ -1,6 +1,5 @@
 import { DataSource, DataSourceOptions } from "typeorm";
 import configuration from "../config/configuration";
-import { join } from "path";
 
 export const typeormConfig = Object.assign({
     type: 'mysql',

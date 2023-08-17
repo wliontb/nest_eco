@@ -1,6 +1,7 @@
 import { Supplier } from "src/suppliers/entities/supplier.entity";
-import { Column, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
+@Entity()
 export class Payment {
     @PrimaryGeneratedColumn()
     id: number;

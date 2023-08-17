@@ -1,8 +1,9 @@
 import { Customer } from "src/customers/entities/customer.entity";
 import { GoodsCategory } from "src/goods-category/entities/goods-category.entity";
 import { Payment } from "src/payment/entities/payment.entity";
-import { Column, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
+@Entity()
 export class Supplier {
     @PrimaryGeneratedColumn()
     id: number;

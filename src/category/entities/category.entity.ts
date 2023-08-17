@@ -1,6 +1,7 @@
 import { GoodsCategory } from "src/goods-category/entities/goods-category.entity";
-import { Column, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
+@Entity()
 export class Category {
     @PrimaryGeneratedColumn()
     id: number;
