@@ -1,10 +1,11 @@
 import { Customer } from "src/customers/entities/customer.entity";
+import CustomBaseEntity from "src/database/entities/base.entity";
 import { Orderdetail } from "src/orderdetails/entities/orderdetail.entity";
 import { Payment } from "src/payment/entities/payment.entity";
 import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
-export class Order {
+export class Order extends CustomBaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
@@ -16,28 +17,25 @@ export class Order {
 
     @Column()
     requiredDate: Date;
-    
-    @Column()
-    timestamp: string;
 
     @Column()
     transactStatus: string;
-
-    @Column({
-        default: false
-    })
-    fulfilled: boolean;
-
-    @Column({
-        default: false
-    })
-    deleted: boolean;
 
     @Column()
     paid: number;
 
     @Column()
-    paymentDate: Date;
+    paidDate: Date;
+
+    @Column({
+        default: false
+    })
+    fulfilled: boolean;
+    
+    @Column({
+        default: false
+    })
+    deleted: boolean;
 
     @OneToMany(() => Orderdetail, (orderdetail) => orderdetail.order)
     orderDetails: Orderdetail[]

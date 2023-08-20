@@ -1,8 +1,9 @@
+import CustomBaseEntity from "src/database/entities/base.entity";
 import { GoodsCategory } from "src/goods-category/entities/goods-category.entity";
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
-export class Category {
+export class Category extends CustomBaseEntity{
     @PrimaryGeneratedColumn()
     id: number;
 
@@ -20,11 +21,6 @@ export class Category {
         length: 255
     })
     picture: string;
-
-    @Column({
-        default: false
-    })
-    active: boolean;
 
     @ManyToOne(() => GoodsCategory, (goodcategory) => goodcategory.categories)
     @JoinColumn()

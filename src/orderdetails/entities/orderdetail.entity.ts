@@ -1,39 +1,22 @@
+import CustomBaseEntity from "src/database/entities/base.entity";
 import { Order } from "src/orders/entities/order.entity";
 import { Product } from "src/products/entities/product.entity";
 import { Shipper } from "src/shippers/entities/shipper.entity";
 import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
-export class Orderdetail {
+export class Orderdetail extends CustomBaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
     @Column()
-    price: number;
+    quantity: number; //số lượng
 
     @Column()
-    quantity: number;
+    finalPrice: number; //giá sau khi đã dùng discount
 
     @Column()
-    discount: number;
-
-    @Column()
-    total: number;
-
-    @Column({
-        length: 50
-    })
-    size: string;
-
-    @Column({
-        length: 50
-    })
-    color: string;
-
-    @Column({
-        default: false
-    })
-    fulfilled: boolean;
+    finalTotalPrice: number; //tổng giá cuối
 
     @Column()
     billDate: Date;
@@ -41,11 +24,10 @@ export class Orderdetail {
     @Column()
     shipDate: Date;
 
-    @Column()
-    freight: number
-
-    @Column()
-    salesTax: number;
+    @Column({
+        default: false
+    })
+    fulfilled: boolean;
 
     @ManyToOne(() => Order, (order) => order.orderDetails)
     @JoinColumn()

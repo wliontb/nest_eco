@@ -13,9 +13,10 @@ import { DatabaseModule } from './database/database.module';
 import { ProductdetailsModule } from './productdetails/productdetails.module';
 import { GoodsCategoryModule } from './goods-category/goods-category.module';
 import { ConfigModule } from './config/config.module'
+import { ProductpropsModule } from './productprops/productprops.module';
 
 @Module({
-  imports: [ConfigModule, CustomersModule, OrdersModule, PaymentModule, CategoryModule, ShippersModule, OrderdetailsModule, ProductsModule, SuppliersModule, DatabaseModule, ProductdetailsModule, GoodsCategoryModule],
+  imports: [ConfigModule, CustomersModule, OrdersModule, PaymentModule, CategoryModule, ShippersModule, OrderdetailsModule, ProductsModule, SuppliersModule, DatabaseModule, ProductdetailsModule, GoodsCategoryModule, ProductpropsModule],
   controllers: [AppController],
   providers: [AppService],
 })

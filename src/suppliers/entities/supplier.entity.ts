@@ -1,62 +1,26 @@
 import { Customer } from "src/customers/entities/customer.entity";
+import CustomBaseEntity from "src/database/entities/base.entity";
 import { GoodsCategory } from "src/goods-category/entities/goods-category.entity";
 import { Payment } from "src/payment/entities/payment.entity";
 import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
-export class Supplier {
+export class Supplier extends CustomBaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({
-        length: 40
-    })
-    companyName: string;
+    @Column()
+    name: string;
 
     @Column({
-        length: 30
+        length: 1000
     })
-    contactFname: string;
-
-    @Column({
-        length: 50
-    })
-    contactLName: string;
-
-    @Column({
-        length: 30
-    })
-    contactTitle: string;
+    description: string;
 
     @Column({
         length: 60
     })
-    address1: string;
-
-    @Column({
-        length: 50
-    })
-    address2: string;
-
-    @Column({
-        length: 15
-    })
-    city: string;
-
-    @Column({
-        length: 25
-    })
-    state: string;
-
-    @Column({
-        length: 15
-    })
-    postalCode: string;
-
-    @Column({
-        length: 50
-    })
-    country: string;
+    address: string;
 
     @Column({
         length: 25
@@ -64,9 +28,19 @@ export class Supplier {
     phone: string;
 
     @Column({
-        length: 25
+        length: 15
     })
-    fax: string;
+    city: string;
+
+    @Column({
+        length: 50
+    })
+    country: string;
+
+    @Column({
+        length: 15
+    })
+    postalCode: string;
 
     @Column({
         length: 75
@@ -79,29 +53,6 @@ export class Supplier {
     url: string;
 
     @Column({
-        length: 100
-    })
-    discountType: string;
-
-    @Column()
-    discountRate: number;
-
-    @Column({
-        default: false
-    })
-    discountAvailable: boolean;
-
-    @Column({
-        default: false
-    })
-    currentOrder: boolean;
-
-    @Column({
-        length: 100
-    })
-    sizeURL: string;
-
-    @Column({
         length: 75
     })
     logo: string;
@@ -110,9 +61,9 @@ export class Supplier {
     ranking: number;
 
     @Column({
-        length: 255
+        default: true
     })
-    notes: string;
+    active: boolean;
 
     @OneToMany(() => GoodsCategory, (goodcategory) => goodcategory.supplier)
     @JoinColumn()

@@ -1,7 +1,8 @@
+import CustomBaseEntity from "src/database/entities/base.entity";
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
-export class Customer {
+export class Customer extends CustomBaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
@@ -12,31 +13,10 @@ export class Customer {
     lastName: string;
 
     @Column()
-    class: string;
-
-    @Column()
-    room: string;
-
-    @Column()
-    building: string;
-
-    @Column()
     address1: string;
 
     @Column()
     address2: string;
-
-    @Column()
-    city: string;
-
-    @Column()
-    state: string;
-
-    @Column()
-    postalCode: string;
-
-    @Column()
-    country: string;
 
     @Column()
     phone: string;
@@ -45,8 +25,18 @@ export class Customer {
     email: string;
 
     @Column()
-    password: string;
+    avatar: string;
+
+    @Column({
+        default: 0
+    })
+    jcoin: number;
 
     @Column()
-    dateEntered: Date;
+    password: string;
+
+    @Column({
+        default: true
+    })
+    active: boolean;
 }

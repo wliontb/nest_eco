@@ -1,68 +1,33 @@
 import { Category } from "src/category/entities/category.entity";
+import CustomBaseEntity from "src/database/entities/base.entity";
 import { Productdetail } from "src/productdetails/entities/productdetail.entity";
+import { Productprop } from "src/productprops/entities/productprop.entity";
 import { Supplier } from "src/suppliers/entities/supplier.entity";
 import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
-export class Product {
+export class Product extends CustomBaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
     @Column({
         length: 60
     })
-    productName: string;
+    name: string;
 
     @Column({
         length: 255
     })
-    productDescription: string;
+    description: string;
 
     @Column()
-    quantityPerUnit: number;
-
-    @Column({
-        length: 20
-    })
-    unitSize: string;
-
-    @Column({
-        length: 15
-    })
-    unitPrice: string;
+    picture: string;
 
     @Column()
-    MSRP: string;
-
-    @Column({
-        length: 50
-    })
-    availableSize: string;
-
-    @Column({
-        length: 100
-    })
-    availableColors: string;
+    price: number;
 
     @Column()
     discount: number;
-
-    @Column()
-    unitWeight: number;
-
-    @Column()
-    unitsInStock: number;
-
-    @Column()
-    unitsOnOrder: number;
-
-    @Column()
-    reorderLevel: number;
-
-    @Column({
-        default: true
-    })
-    productAvailable: boolean;
 
     @Column({
         default: false
@@ -70,22 +35,9 @@ export class Product {
     discountAvailable: boolean;
 
     @Column({
-        default: false
+        default: true
     })
-    currentOrder: boolean;
-
-    @Column({
-        length: 50
-    })
-    picture: string;
-
-    @Column()
-    ranking: number;
-
-    @Column({
-        length: 255
-    })
-    note: string;
+    productAvailable: boolean;    
 
     @OneToOne(() => Supplier)
     @JoinColumn()
@@ -98,5 +50,8 @@ export class Product {
     @OneToMany(() => Productdetail, (productdetail) => productdetail.product)
     @JoinColumn()
     productdetails: Productdetail[]
-    
+
+    @OneToMany(() => Productprop, (productprop) => productprop.product)
+    @JoinColumn()
+    productprops: Productprop[]
 }
