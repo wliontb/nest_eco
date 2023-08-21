@@ -23,7 +23,8 @@ export class Supplier extends CustomBaseEntity {
     address: string;
 
     @Column({
-        length: 25
+        length: 25,
+        unique: true
     })
     phone: string;
 
@@ -43,7 +44,8 @@ export class Supplier extends CustomBaseEntity {
     postalCode: string;
 
     @Column({
-        length: 75
+        length: 75,
+        unique: true
     })
     email: string;
 

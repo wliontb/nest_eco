@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Catch, UseFilters } from '@nestjs/common';
 import { SuppliersService } from './suppliers.service';
 import { CreateSupplierDto } from './dto/create-supplier.dto';
 import { UpdateSupplierDto } from './dto/update-supplier.dto';
+import { QueryFailedFilter } from 'src/common/exceptions/query.filter';
 
 @Controller('suppliers')
 export class SuppliersController {
@@ -9,7 +10,12 @@ export class SuppliersController {
 
   @Post()
   create(@Body() createSupplierDto: CreateSupplierDto) {
-    return this.suppliersService.create(createSupplierDto);
+    const supplier = this.suppliersService.create(createSupplierDto);
+
+    return {
+      statusCode: 200,
+      result: supplier
+    }
   }
 
   @Get()

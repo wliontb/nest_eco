@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Catch, HttpException, HttpStatus, Injectable, UnauthorizedException } from '@nestjs/common';
 import { CreateSupplierDto } from './dto/create-supplier.dto';
 import { UpdateSupplierDto } from './dto/update-supplier.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Supplier } from './entities/supplier.entity';
 import { Repository } from 'typeorm';
+import { QueryFailedFilter } from 'src/common/exceptions/query.filter';
 
 @Injectable()
 export class SuppliersService {
@@ -13,8 +14,6 @@ export class SuppliersService {
   ){}
 
   async create(createSupplierDto: CreateSupplierDto) {
-    try {
-      console.log(createSupplierDto);
       const {
         postal_code,
         ...supplierObj
@@ -24,10 +23,9 @@ export class SuppliersService {
         postalCode: postal_code
       });
 
+      // throw new HttpException('hehe', HttpStatus.FORBIDDEN)
+
       return this.supplierRepository.save(supplier);
-    } catch (error) {
-      console.log(error)
-    }
   }
 
   findAll() {

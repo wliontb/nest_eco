@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import * as cookieParser from 'cookie-parser';
 import { ValidationPipe } from '@nestjs/common';
+import { QueryFailedFilter } from './common/exceptions/query.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -11,6 +12,8 @@ async function bootstrap() {
   })
 
   app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalFilters(new QueryFailedFilter())
+  app.setGlobalPrefix('api')
 
   await app.listen(3000);
 }
