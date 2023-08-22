@@ -14,9 +14,10 @@ import { ProductdetailsModule } from './productdetails/productdetails.module';
 import { GoodsCategoryModule } from './goods-category/goods-category.module';
 import { ConfigModule } from './config/config.module'
 import { ProductpropsModule } from './productprops/productprops.module';
+import { CommonModule } from './common/common.module';
 
 @Module({
-  imports: [ConfigModule, CustomersModule, OrdersModule, PaymentModule, CategoryModule, ShippersModule, OrderdetailsModule, ProductsModule, SuppliersModule, DatabaseModule, ProductdetailsModule, GoodsCategoryModule, ProductpropsModule],
+  imports: [ConfigModule, CustomersModule, OrdersModule, PaymentModule, CategoryModule, ShippersModule, OrderdetailsModule, ProductsModule, SuppliersModule, DatabaseModule, ProductdetailsModule, GoodsCategoryModule, ProductpropsModule, CommonModule],
   controllers: [AppController],
   providers: [AppService],
 })

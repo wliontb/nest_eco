@@ -23,17 +23,31 @@ export class SuppliersService {
         postalCode: postal_code
       });
 
-      // throw new HttpException('hehe', HttpStatus.FORBIDDEN)
-
       return this.supplierRepository.save(supplier);
   }
 
-  findAll() {
-    return `This action returns all suppliers`;
+  async findAll() {
+    try {
+      const supplierArr = await this.supplierRepository.find();
+
+      return supplierArr
+    } catch (error) {
+      throw new BadRequestException(error)
+    }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} supplier`;
+  async findOne(id: number) {
+    try {
+      const supplier = await this.supplierRepository.findOne({
+        where: {
+          id
+        }
+      });
+
+      return supplier
+    } catch (error) {
+      throw new BadRequestException(error)
+    }
   }
 
   update(id: number, updateSupplierDto: UpdateSupplierDto) {

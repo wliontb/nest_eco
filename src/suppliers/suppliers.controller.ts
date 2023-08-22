@@ -9,23 +9,32 @@ export class SuppliersController {
   constructor(private readonly suppliersService: SuppliersService) {}
 
   @Post()
-  create(@Body() createSupplierDto: CreateSupplierDto) {
-    const supplier = this.suppliersService.create(createSupplierDto);
+  async create(@Body() createSupplierDto: CreateSupplierDto) {
+    const supplier = await this.suppliersService.create(createSupplierDto);
 
     return {
-      statusCode: 200,
-      result: supplier
+      result: supplier,
+      status: 'success'
     }
   }
 
   @Get()
-  findAll() {
-    return this.suppliersService.findAll();
+  async findAll() {
+    const supplier = await this.suppliersService.findAll();
+
+    return {
+      result: supplier,
+      status: 'success'
+    }
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.suppliersService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    const supplier = await this.suppliersService.findOne(+id);
+    return {
+      result: supplier,
+      status: 'success'
+    }
   }
 
   @Patch(':id')
