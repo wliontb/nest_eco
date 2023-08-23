@@ -54,7 +54,11 @@ export class SuppliersService {
     return `This action updates a #${id} supplier`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} supplier`;
+  async remove(id: number) {
+    try {
+      return true
+    } catch (error) {
+      throw new BadRequestException(error)
+    }
   }
 }

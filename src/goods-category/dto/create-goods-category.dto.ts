@@ -1,1 +1,19 @@
-export class CreateGoodsCategoryDto {}
+import { IsNotEmpty, IsNumber, IsString } from "class-validator";
+
+export class CreateGoodsCategoryDto {
+    @IsNotEmpty()
+    @IsString()
+    good_name: string;
+
+    @IsNotEmpty()
+    @IsString()
+    description: string;
+
+    @IsNotEmpty()
+    @IsString()
+    picture: string;
+
+    @IsNotEmpty()
+    @IsNumber()
+    supplier_id: number;
+}

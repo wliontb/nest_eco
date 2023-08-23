@@ -7,7 +7,7 @@ export class QueryFailedFilter implements ExceptionFilter {
         const ctx = host.switchToHttp();
         const response = ctx.getResponse();
         const request = ctx.getRequest();
-
+        
         response.status(409).json({
             status: 'error',
             message: exception.driverError.sqlMessage

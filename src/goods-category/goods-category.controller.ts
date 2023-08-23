@@ -8,13 +8,21 @@ export class GoodsCategoryController {
   constructor(private readonly goodsCategoryService: GoodsCategoryService) {}
 
   @Post()
-  create(@Body() createGoodsCategoryDto: CreateGoodsCategoryDto) {
-    return this.goodsCategoryService.create(createGoodsCategoryDto);
+  async create(@Body() createGoodsCategoryDto: CreateGoodsCategoryDto) {
+    const goodCate = await this.goodsCategoryService.create(createGoodsCategoryDto);
+    return {
+      result: goodCate,
+      status: 'success'
+    }
   }
 
   @Get()
-  findAll() {
-    return this.goodsCategoryService.findAll();
+  async findAll() {
+    const goodCates = await this.goodsCategoryService.findAll();
+    return {
+      result: goodCates,
+      status: 'success'
+    }
   }
 
   @Get(':id')
@@ -28,7 +36,13 @@ export class GoodsCategoryController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.goodsCategoryService.remove(+id);
+  async remove(@Param('id') id: string) {
+    const goodCate = await this.goodsCategoryService.remove(+id);
+
+    return {
+      status: 'success',
+      result: goodCate,
+      message: 'Remove successfully'
+    }
   }
 }
