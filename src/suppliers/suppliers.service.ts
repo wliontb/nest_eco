@@ -56,7 +56,13 @@ export class SuppliersService {
 
   async remove(id: number) {
     try {
-      return true
+      const supplier = await this.supplierRepository.findOne({
+        where: {
+          id
+        }
+      })
+
+      return await this.supplierRepository.remove(supplier);
     } catch (error) {
       throw new BadRequestException(error)
     }

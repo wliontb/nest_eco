@@ -43,7 +43,13 @@ export class SuppliersController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.suppliersService.remove(+id);
+  async remove(@Param('id') id: string) {
+    const supplier = await this.suppliersService.remove(+id);
+
+    return {
+      result: supplier,
+      status: 'success',
+      message: 'Remove successfully'
+    }
   }
 }
