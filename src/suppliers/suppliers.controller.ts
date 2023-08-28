@@ -38,8 +38,12 @@ export class SuppliersController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateSupplierDto: UpdateSupplierDto) {
-    return this.suppliersService.update(+id, updateSupplierDto);
+  async update(@Param('id') id: string, @Body() updateSupplierDto: UpdateSupplierDto) {
+    const supplier = await this.suppliersService.update(+id, updateSupplierDto);
+    return {
+      result: supplier,
+      status: 'success'
+    }
   }
 
   @Delete(':id')

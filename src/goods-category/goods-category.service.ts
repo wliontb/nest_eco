@@ -53,8 +53,15 @@ export class GoodsCategoryService {
     return goodCates;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} goodsCategory`;
+  async findOne(id: number) {
+    return await this.goodCategoryRepository.findOne({
+      where: {
+        id
+      },
+      relations: {
+        'supplier':true
+      }
+    })
   }
 
   update(id: number, updateGoodsCategoryDto: UpdateGoodsCategoryDto) {

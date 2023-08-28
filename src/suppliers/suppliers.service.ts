@@ -1,4 +1,4 @@
-import { BadRequestException, Catch, HttpException, HttpStatus, Injectable, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, Catch, HttpException, HttpStatus, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { CreateSupplierDto } from './dto/create-supplier.dto';
 import { UpdateSupplierDto } from './dto/update-supplier.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -11,19 +11,19 @@ export class SuppliersService {
   constructor(
     @InjectRepository(Supplier)
     private supplierRepository: Repository<Supplier>
-  ){}
+  ) { }
 
   async create(createSupplierDto: CreateSupplierDto) {
-      const {
-        postal_code,
-        ...supplierObj
-      } = createSupplierDto;
-      const supplier = this.supplierRepository.create({
-        ...supplierObj,
-        postalCode: postal_code
-      });
+    const {
+      postal_code,
+      ...supplierObj
+    } = createSupplierDto;
+    const supplier = this.supplierRepository.create({
+      ...supplierObj,
+      postalCode: postal_code
+    });
 
-      return this.supplierRepository.save(supplier);
+    return this.supplierRepository.save(supplier);
   }
 
   async findAll() {
@@ -50,8 +50,32 @@ export class SuppliersService {
     }
   }
 
-  update(id: number, updateSupplierDto: UpdateSupplierDto) {
-    return `This action updates a #${id} supplier`;
+  async update(id: number, updateSupplierDto: UpdateSupplierDto) {
+    const supplier = await this.supplierRepository.findOne({
+      where: {
+        id
+      }
+    })
+
+    if (!supplier) {
+      throw new NotFoundException('Supplier not found');
+    }
+
+    supplier.name = updateSupplierDto.name;
+    supplier.description = updateSupplierDto.description;
+    supplier.phone = updateSupplierDto.phone;
+    supplier.email = updateSupplierDto.email;
+    supplier.address = updateSupplierDto.address;
+    supplier.city = updateSupplierDto.city;
+    supplier.country = updateSupplierDto.country;
+    supplier.postalCode = updateSupplierDto.postal_code;
+    supplier.url = updateSupplierDto.url;
+    supplier.logo = updateSupplierDto.logo;
+    supplier.ranking = updateSupplierDto.ranking;
+    supplier.active = updateSupplierDto.active;
+
+    return this.supplierRepository.save(supplier);
+
   }
 
   async remove(id: number) {

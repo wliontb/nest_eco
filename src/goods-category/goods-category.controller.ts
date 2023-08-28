@@ -26,8 +26,13 @@ export class GoodsCategoryController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.goodsCategoryService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    const goodCate = await this.goodsCategoryService.findOne(+id);
+
+    return {
+      result: goodCate,
+      status: 'success'
+    }
   }
 
   @Patch(':id')
