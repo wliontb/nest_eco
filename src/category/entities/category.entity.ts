@@ -22,6 +22,11 @@ export class Category extends CustomBaseEntity{
     })
     picture: string;
 
+    @Column({
+        default: true
+    })
+    active: boolean
+
     @ManyToOne(() => GoodsCategory, (goodcategory) => goodcategory.categories)
     @JoinColumn()
     goodCategory: GoodsCategory
