@@ -73,8 +73,30 @@ export class CategoryService {
     })
   }
 
-  update(id: number, updateCategoryDto: UpdateCategoryDto) {
-    return `This action updates a #${id} category`;
+  async update(id: number, updateCategoryDto: UpdateCategoryDto) {
+    try {
+      const category = await this.categoryRepository.findOne({
+        where: {
+          id
+        }
+      });
+
+      const goodCate = await this.goodCateRepository.findOne({
+        where: {
+          id: updateCategoryDto.goodCateId
+        }
+      })
+
+      category.categoryName = updateCategoryDto.categoryName;
+      category.description = updateCategoryDto.description;
+      category.picture = updateCategoryDto.picture;
+      category.active = !!updateCategoryDto.active;
+      category.goodCategory = goodCate;
+
+      return await this.categoryRepository.save(category);
+    } catch (error) {
+      throw new BadRequestException(error)
+    }
   }
 
   async remove(id: number) {

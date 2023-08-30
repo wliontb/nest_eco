@@ -13,7 +13,7 @@ export class CreateCategoryDto {
     @IsNumberString()
     active: number;
 
-    @IsNumber()
+    @IsNumberString()
     goodCateId: number;
 }
 

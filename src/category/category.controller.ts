@@ -35,8 +35,12 @@ export class CategoryController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCategoryDto: UpdateCategoryDto) {
-    return this.categoryService.update(+id, updateCategoryDto);
+  async update(@Param('id') id: string, @Body() updateCategoryDto: UpdateCategoryDto) {
+    const category = await this.categoryService.update(+id, updateCategoryDto);
+    return {
+      result: category,
+      status: 'success'
+    }
   }
 
   @Delete(':id')
