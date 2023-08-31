@@ -37,6 +37,6 @@ export class CreateSupplierDto {
     @IsNumber()
     ranking: number;
 
-    @IsBoolean()
-    active: boolean;
+    @IsNumberString()
+    active: number;
 }

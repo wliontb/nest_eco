@@ -16,11 +16,13 @@ export class SuppliersService {
   async create(createSupplierDto: CreateSupplierDto) {
     const {
       postal_code,
+      active,
       ...supplierObj
     } = createSupplierDto;
     const supplier = this.supplierRepository.create({
       ...supplierObj,
-      postalCode: postal_code
+      postalCode: postal_code,
+      active: !!active
     });
 
     return this.supplierRepository.save(supplier);
@@ -72,7 +74,7 @@ export class SuppliersService {
     supplier.url = updateSupplierDto.url;
     supplier.logo = updateSupplierDto.logo;
     supplier.ranking = updateSupplierDto.ranking;
-    supplier.active = updateSupplierDto.active;
+    supplier.active = !!updateSupplierDto.active;
 
     return this.supplierRepository.save(supplier);
 
