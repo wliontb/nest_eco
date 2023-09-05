@@ -22,16 +22,6 @@ export class GoodsCategoryService {
       goodCate.goodName = createGoodsCategoryDto.good_name;
       goodCate.description = createGoodsCategoryDto.description;
       goodCate.picture = createGoodsCategoryDto.picture;
-      const supplier = await this.suppRepository.findOne({
-        where: {
-          id: createGoodsCategoryDto.supplier_id
-        }
-      })
-
-      if(!supplier) {
-        throw new HttpException('Supplier ID not exist', HttpStatus.BAD_REQUEST);
-      }
-      goodCate.supplier = supplier;
 
       return await goodCate.save()
     } catch (error) {
@@ -44,9 +34,6 @@ export class GoodsCategoryService {
     const goodCates = await this.goodCategoryRepository.find({
       order: {
         id: 'DESC'
-      },
-      relations: {
-        supplier: true
       }
     });
 
@@ -57,15 +44,22 @@ export class GoodsCategoryService {
     return await this.goodCategoryRepository.findOne({
       where: {
         id
-      },
-      relations: {
-        'supplier':true
       }
     })
   }
 
-  update(id: number, updateGoodsCategoryDto: UpdateGoodsCategoryDto) {
-    return `This action updates a #${id} goodsCategory`;
+  async update(id: number, updateGoodsCategoryDto: UpdateGoodsCategoryDto) {
+    const goodCate = await this.goodCategoryRepository.findOne({
+      where: {
+        id
+      }
+    })
+
+    goodCate.goodName = updateGoodsCategoryDto.good_name;
+    goodCate.description = updateGoodsCategoryDto.description;
+    goodCate.picture = updateGoodsCategoryDto.picture;
+
+    return await this.goodCategoryRepository.save(goodCate);
   }
 
   async remove(id: number) {

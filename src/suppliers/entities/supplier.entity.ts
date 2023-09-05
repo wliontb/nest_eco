@@ -67,9 +67,9 @@ export class Supplier extends CustomBaseEntity {
     })
     active: boolean;
 
-    @OneToMany(() => GoodsCategory, (goodcategory) => goodcategory.supplier)
-    @JoinColumn()
-    goodCategories: GoodsCategory[];
+    // @OneToMany(() => GoodsCategory, (goodcategory) => goodcategory.supplier)
+    // @JoinColumn()
+    // goodCategories: GoodsCategory[];
 
     @OneToOne(() => Customer)
     @JoinColumn()

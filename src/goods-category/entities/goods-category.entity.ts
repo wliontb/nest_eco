@@ -23,7 +23,7 @@ export class GoodsCategory extends CustomBaseEntity {
     @JoinColumn()
     categories: Category[]
 
-    @ManyToOne(() => Supplier, (supplier) => supplier.goodCategories)
-    @JoinColumn()
-    supplier: Supplier
+    // @ManyToOne(() => Supplier, (supplier) => supplier.goodCategories)
+    // @JoinColumn()
+    // supplier: Supplier
 }

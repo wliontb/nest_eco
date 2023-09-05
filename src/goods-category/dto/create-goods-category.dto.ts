@@ -12,8 +12,4 @@ export class CreateGoodsCategoryDto {
     @IsNotEmpty()
     @IsString()
     picture: string;
-
-    @IsNotEmpty()
-    @IsNumber()
-    supplier_id: number;
 }
