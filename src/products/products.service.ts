@@ -46,7 +46,12 @@ export class ProductsService {
   }
 
   async findAll() {
-    return await this.productRepository.find();
+    return await this.productRepository.find({
+      relations: {
+        category: true,
+        supplier: true
+      }
+    });
   }
 
   findOne(id: number) {
