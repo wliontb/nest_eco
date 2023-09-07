@@ -18,8 +18,12 @@ export class ProductsController {
   }
 
   @Get()
-  findAll() {
-    return this.productsService.findAll();
+  async findAll() {
+    const products = await this.productsService.findAll();
+    return {
+      result: products,
+      status: 'success'
+    }
   }
 
   @Get(':id')
