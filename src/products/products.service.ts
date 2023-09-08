@@ -54,12 +54,47 @@ export class ProductsService {
     });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} product`;
+  async findOne(id: number) {
+    return await this.productRepository.findOne({
+      where: {
+        id
+      },
+      relations: {
+        supplier: true,
+        category: true
+      }
+    })
   }
 
-  update(id: number, updateProductDto: UpdateProductDto) {
-    return `This action updates a #${id} product`;
+  async update(id: number, updateProductDto: UpdateProductDto) {
+    const supplier = await this.supplierRepository.findOne({
+      where: {
+        id: updateProductDto.supplier_id
+      }
+    })
+
+    const category = await this.categoryRepository.findOne({
+      where: {
+        id: updateProductDto.category_id
+      }
+    })
+
+    const product = await this.productRepository.findOne({
+      where: {
+        id
+      }
+    });
+    product.name = updateProductDto.name;
+    product.description = updateProductDto.description;
+    product.picture = updateProductDto.picture;
+    product.price = updateProductDto.price;
+    product.discount = updateProductDto.discount;
+    product.discountAvailable = !!updateProductDto.discount_available;
+    product.productAvailable = !!updateProductDto.product_available;
+    product.supplier = supplier;
+    product.category = category;
+    
+    return await this.productRepository.save(product);
   }
 
   remove(id: number) {

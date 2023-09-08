@@ -34,7 +34,7 @@ export class CreateSupplierDto {
     @IsString()
     logo: string;
 
-    @IsNumber()
+    @IsNumberString()
     ranking: number;
 
     @IsNumberString()

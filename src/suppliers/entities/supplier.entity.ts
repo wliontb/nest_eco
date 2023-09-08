@@ -2,6 +2,7 @@ import { Customer } from "src/customers/entities/customer.entity";
 import CustomBaseEntity from "src/database/entities/base.entity";
 import { GoodsCategory } from "src/goods-category/entities/goods-category.entity";
 import { Payment } from "src/payment/entities/payment.entity";
+import { Product } from "src/products/entities/product.entity";
 import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
@@ -67,9 +68,9 @@ export class Supplier extends CustomBaseEntity {
     })
     active: boolean;
 
-    // @OneToMany(() => GoodsCategory, (goodcategory) => goodcategory.supplier)
-    // @JoinColumn()
-    // goodCategories: GoodsCategory[];
+    @OneToMany(() => Product, (product) => product.supplier)
+    @JoinColumn()
+    products: Product[]
 
     @OneToOne(() => Customer)
     @JoinColumn()

@@ -3,7 +3,7 @@ import CustomBaseEntity from "src/database/entities/base.entity";
 import { Productdetail } from "src/productdetails/entities/productdetail.entity";
 import { Productprop } from "src/productprops/entities/productprop.entity";
 import { Supplier } from "src/suppliers/entities/supplier.entity";
-import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Product extends CustomBaseEntity {
@@ -37,15 +37,21 @@ export class Product extends CustomBaseEntity {
     @Column({
         default: true
     })
-    productAvailable: boolean;    
+    productAvailable: boolean;
 
-    @OneToOne(() => Supplier)
+    @ManyToOne(() => Supplier, (supplier) => supplier.products)
     @JoinColumn()
     supplier: Supplier;
 
-    @OneToOne(() => Category)
+    @Column()
+    supplierId: number;
+
+    @ManyToOne(() => Category, (category) => category.products)
     @JoinColumn()
     category: Category;
+
+    @Column()
+    categoryId: number;
 
     @OneToMany(() => Productdetail, (productdetail) => productdetail.product)
     @JoinColumn()
