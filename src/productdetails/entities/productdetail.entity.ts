@@ -34,4 +34,7 @@ export class Productdetail extends CustomBaseEntity {
     @ManyToOne(() => Product, (product) => product.productdetails)
     @JoinColumn()
     product: Product;
+
+    @Column()
+    productId: number;
 }
