@@ -35,7 +35,6 @@ export class ProductdetailsService {
   }
 
   async findAll(productQuery?: any) {
-    console.log(productQuery)
     const queryOptions: any = {
       order: {
         id: 'DESC',

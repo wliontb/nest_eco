@@ -1,15 +1,53 @@
 import { Injectable } from '@nestjs/common';
 import { CreateProductpropDto } from './dto/create-productprop.dto';
 import { UpdateProductpropDto } from './dto/update-productprop.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Productprop } from './entities/productprop.entity';
+import { Repository } from 'typeorm';
+import { Product } from 'src/products/entities/product.entity';
 
 @Injectable()
 export class ProductpropsService {
-  create(createProductpropDto: CreateProductpropDto) {
-    return 'This action adds a new productprop';
+  constructor(
+    @InjectRepository(Productprop)
+    private readonly productPropRepository: Repository<Productprop>,
+    @InjectRepository(Product)
+    private readonly productRepository: Repository<Product>
+  ) {}
+
+  async create(createProductpropDto: CreateProductpropDto) {
+    const product = await this.productRepository.findOne({
+      where: {
+        id: +createProductpropDto.productId
+      }
+    })
+
+    const prodProp = this.productPropRepository.create();
+    prodProp.nameProp = createProductpropDto.nameProp;
+    prodProp.valueProp = createProductpropDto.valueProp;
+    prodProp.product = product;
+
+    return await this.productPropRepository.save(prodProp);
   }
 
-  findAll() {
-    return `This action returns all productprops`;
+  async findAll(productQuery?: any) {
+    const queryOptions: any = {
+      order: {
+        id: 'ASC',
+      },
+    };
+
+    if (productQuery !== undefined) {
+      queryOptions.where = {
+        product: {
+          id: productQuery.product
+        }
+      };
+    }
+
+    const prodProps = await this.productPropRepository.find(queryOptions);
+
+    return prodProps;
   }
 
   findOne(id: number) {
