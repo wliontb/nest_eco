@@ -54,12 +54,37 @@ export class ProductdetailsService {
     return prodDetails;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} productdetail`;
+  async findOne(id: number) {
+    return await this.prodDetailRepository.findOne({
+      where: {
+        id
+      }
+    })
   }
 
-  update(id: number, updateProductdetailDto: UpdateProductdetailDto) {
-    return `This action updates a #${id} productdetail`;
+  async update(id: number, updateProductdetailDto: UpdateProductdetailDto) {
+    const product = await this.productRepository.findOne({
+      where: {
+        id: +updateProductdetailDto.productId
+      }
+    })
+
+    const prodDetail = await this.prodDetailRepository.findOne({
+      where: {
+        id
+      }
+    })
+
+    prodDetail.nameDetail = updateProductdetailDto.nameDetail;
+    prodDetail.picture = updateProductdetailDto.picture;
+    prodDetail.price = +updateProductdetailDto.price;
+    prodDetail.qty = +updateProductdetailDto.qty;
+    prodDetail.product = product;
+    prodDetail.discount = +updateProductdetailDto.discount;
+    prodDetail.discountAvailable = !!updateProductdetailDto.discountAvailable;
+
+    return await this.prodDetailRepository.save(prodDetail);
+
   }
 
   remove(id: number) {

@@ -51,18 +51,28 @@ export class CategoryService {
     }
   }
 
-  async findAll() {
-    return await this.categoryRepository.find({
-      relations: {
-       goodCategory: true
-      },
+  async findAll(queryFilter?: any) {
+    const queryOptions: any = {
       order: {
         id: 'DESC'
+      },
+      relations: {
+        goodCategory: true
+      },
+    }
+
+    if(queryFilter !== undefined) {
+      queryOptions.where = {
+        goodCategory: {
+          id: queryFilter.goodCateId
+        }
       }
-    })
+    }
+
+    return await this.categoryRepository.find(queryOptions)
   }
 
-  async findOne(id: number) {
+  async findOne(id: number, query?: any) {
     return await this.categoryRepository.findOne({
       where: {
         id

@@ -26,13 +26,23 @@ export class ProductdetailsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.productdetailsService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    const prodDetail = await this.productdetailsService.findOne(+id);
+
+    return {
+      result: prodDetail,
+      status: 'success'
+    }
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateProductdetailDto: UpdateProductdetailDto) {
-    return this.productdetailsService.update(+id, updateProductdetailDto);
+  async update(@Param('id') id: string, @Body() updateProductdetailDto: UpdateProductdetailDto) {
+    const prodDetail = await this.productdetailsService.update(+id, updateProductdetailDto);
+
+    return {
+      result: prodDetail,
+      status: 'success'
+    }
   }
 
   @Delete(':id')
