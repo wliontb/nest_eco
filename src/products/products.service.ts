@@ -45,13 +45,23 @@ export class ProductsService {
     return await this.productRepository.save(product);
   }
 
-  async findAll() {
-    return await this.productRepository.find({
+  async findAll(queryFilter?: any) {
+    const queryOptions: any = {
       relations: {
         category: true,
         supplier: true
       }
-    });
+    }
+
+    if(queryFilter !== undefined) {
+      queryOptions.where = {
+        category: {
+          id: queryFilter.categoryId
+        }
+      }
+    }
+
+    return await this.productRepository.find(queryOptions);
   }
 
   async findOne(id: number) {

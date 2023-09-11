@@ -6,16 +6,24 @@ export class Customer extends CustomBaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
+    @Column({
+        nullable: true
+    })
     firstName: string;
 
-    @Column()
+    @Column({
+        nullable: true
+    })
     lastName: string;
 
-    @Column()
+    @Column({
+        nullable: true
+    })
     address1: string;
 
-    @Column()
+    @Column({
+        nullable: true
+    })
     address2: string;
 
     @Column()
@@ -24,7 +32,9 @@ export class Customer extends CustomBaseEntity {
     @Column()
     email: string;
 
-    @Column()
+    @Column({
+        nullable: true
+    })
     avatar: string;
 
     @Column({
