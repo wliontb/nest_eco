@@ -49,17 +49,31 @@ export class ProductsService {
 
   async findAll(queryFilter?: any) {
     const queryOptions: any = {
-      relations: {
-        category: true,
-        supplier: true
-      }
-    }
+      relations: ['category', 'supplier'], // Sử dụng mảng thay vì đối tượng để chỉ định các mối quan hệ
+    };
 
-    if(queryFilter !== undefined) {
-      queryOptions.where = {
-        category: {
-          id: queryFilter.categoryId
+    if (queryFilter !== undefined) {
+      if (queryFilter.categoryId) {
+        queryOptions.where = {
+          category: {
+            id: queryFilter.categoryId,
+          },
+        };
+      }
+      if (queryFilter.flashsale) {
+        if (!queryOptions.where) {
+          queryOptions.where = {};
         }
+        queryOptions.where.isFlashsale = true;
+      }
+      if (queryFilter.trending) {
+        if (!queryOptions.where) {
+          queryOptions.where = {};
+        }
+        queryOptions.where.isTrending = true;
+      }
+      if (queryFilter.limit) {
+        queryOptions.take = queryFilter.limit;
       }
     }
 
@@ -74,7 +88,8 @@ export class ProductsService {
       relations: {
         supplier: true,
         category: true
-      }
+      },
+      
     })
   }
 
