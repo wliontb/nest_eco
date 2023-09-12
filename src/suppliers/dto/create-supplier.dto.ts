@@ -1,4 +1,4 @@
-import { IsNumber, IsString, IsNumberString, IsEmail, IsBoolean } from "class-validator";
+import { IsNumber, IsString, IsNumberString, IsEmail, IsBoolean, IsBooleanString } from "class-validator";
 import { IsValueExist } from "../validators/is-value-exist.validator";
 
 export class CreateSupplierDto {
@@ -35,8 +35,8 @@ export class CreateSupplierDto {
     logo: string;
 
     @IsNumberString()
-    ranking: number;
+    ranking: string;
 
-    @IsNumberString()
-    active: number;
+    @IsBooleanString()
+    active: string;
 }

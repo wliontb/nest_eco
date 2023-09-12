@@ -55,12 +55,34 @@ export class CustomersService {
     return `This action returns all customers`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} customer`;
+  async findOne(id: number) {
+    const customer = await this.customerRepository.findOne({
+      where: {
+        id
+      }
+    })
+
+    return customer;
   }
 
-  update(id: number, updateCustomerDto: UpdateCustomerDto) {
-    return `This action updates a #${id} customer`;
+  async update(id: number, updateCustomerDto: UpdateCustomerDto) {
+    const customer = await this.customerRepository.findOne({
+      where: {
+        id
+      }
+    })
+
+    customer.firstName = updateCustomerDto.firstName;
+    customer.lastName = updateCustomerDto.lastName;
+    customer.address1 = updateCustomerDto.address1;
+    customer.address2 = updateCustomerDto.address2;
+    customer.phone = updateCustomerDto.phone;
+    customer.email = updateCustomerDto.email;
+    customer.avatar = updateCustomerDto.avatar;
+    customer.gender = !!updateCustomerDto.gender;
+    customer.password = updateCustomerDto.password;
+
+    return await this.customerRepository.save(customer);
   }
 
   remove(id: number) {

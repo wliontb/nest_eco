@@ -39,6 +39,18 @@ export class Product extends CustomBaseEntity {
     })
     productAvailable: boolean;
 
+    @Column({
+        default: false,
+        type: Boolean
+    })
+    isFlashsale: boolean;
+
+    @Column({
+        default: false,
+        type: Boolean
+    })
+    isTrending: boolean;
+
     @ManyToOne(() => Supplier, (supplier) => supplier.products)
     @JoinColumn()
     supplier: Supplier;

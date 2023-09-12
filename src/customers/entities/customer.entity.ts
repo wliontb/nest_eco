@@ -46,7 +46,19 @@ export class Customer extends CustomBaseEntity {
     password: string;
 
     @Column({
+        type: Boolean,
+        default: false
+    })
+    isAdmin: boolean;
+
+    @Column({
         default: true
     })
     active: boolean;
+
+    @Column({
+        type: Boolean,
+        default: true
+    })
+    gender: boolean;
 }

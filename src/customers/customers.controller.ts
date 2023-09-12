@@ -44,13 +44,23 @@ export class CustomersController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.customersService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    const customer = await this.customersService.findOne(+id);
+
+    return {
+      result: customer,
+      status: 'success'
+    }
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCustomerDto: UpdateCustomerDto) {
-    return this.customersService.update(+id, updateCustomerDto);
+  async update(@Param('id') id: string, @Body() updateCustomerDto: UpdateCustomerDto) {
+    const customer = await this.customersService.update(+id, updateCustomerDto);
+
+    return {
+      result: customer,
+      status: 'success'
+    }
   }
 
   @Delete(':id')
