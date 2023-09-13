@@ -60,6 +60,15 @@ export class ProductsService {
           },
         };
       }
+      if (queryFilter.goodCateId) {
+        queryOptions.where = {
+          category: {
+            goodCategory: {
+              id: queryFilter.goodCateId
+            },
+          },
+        };
+      }
       if (queryFilter.flashsale) {
         if (!queryOptions.where) {
           queryOptions.where = {};
@@ -96,7 +105,7 @@ export class ProductsService {
   async update(id: number, updateProductDto: UpdateProductDto) {
     const supplier = await this.supplierRepository.findOne({
       where: {
-        id: updateProductDto.supplier_id
+        id: updateProductDto.supplier_id,
       }
     })
 
