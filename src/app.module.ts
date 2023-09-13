@@ -15,9 +15,11 @@ import { GoodsCategoryModule } from './goods-category/goods-category.module';
 import { ConfigModule } from './config/config.module'
 import { ProductpropsModule } from './productprops/productprops.module';
 import { CommonModule } from './common/common.module';
+import { InvoiceModule } from './invoice/invoice.module';
+import { InvoiceChildModule } from './invoice_child/invoice_child.module';
 
 @Module({
-  imports: [ConfigModule, CustomersModule, OrdersModule, PaymentModule, CategoryModule, ShippersModule, OrderdetailsModule, ProductsModule, SuppliersModule, DatabaseModule, ProductdetailsModule, GoodsCategoryModule, ProductpropsModule, CommonModule],
+  imports: [ConfigModule, CustomersModule, OrdersModule, PaymentModule, CategoryModule, ShippersModule, OrderdetailsModule, ProductsModule, SuppliersModule, DatabaseModule, ProductdetailsModule, GoodsCategoryModule, ProductpropsModule, CommonModule, InvoiceModule, InvoiceChildModule],
   controllers: [AppController],
   providers: [AppService],
 })
