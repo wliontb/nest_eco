@@ -10,7 +10,25 @@ export class UpdateCustomerDto {
     lastName: string;
 
     @IsString()
+    nation1: string;
+
+    @IsString()
+    city1: string;
+
+    @IsString()
+    district1: string;
+
+    @IsString()
     address1: string;
+
+    @IsString()
+    nation2: string;
+
+    @IsString()
+    city2: string;
+
+    @IsString()
+    district2: string;
 
     @IsString()
     address2: string;

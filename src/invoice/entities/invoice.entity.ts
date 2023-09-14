@@ -1,6 +1,7 @@
+import { Customer } from "src/customers/entities/customer.entity";
 import CustomBaseEntity from "src/database/entities/base.entity";
 import { InvoiceChild } from "src/invoice_child/entities/invoice_child.entity";
-import { Column, Entity, JoinColumn, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 export enum InvoiceStatus {
     PENDING = 1,
@@ -41,7 +42,7 @@ export class Invoice extends CustomBaseEntity {
     })
     payment: number;
 
-    @OneToMany(() => InvoiceChild, (invoiceChild) => invoiceChild.Invoice)
+    @OneToMany(() => InvoiceChild, (invoiceChild) => invoiceChild.invoice)
     @JoinColumn()
     invoiceChild: InvoiceChild[]
 
@@ -54,5 +55,9 @@ export class Invoice extends CustomBaseEntity {
         default: InvoiceStatus.PENDING
     })
     status: InvoiceStatus;
+
+    @ManyToOne(() => Customer, (customer) => customer.invoices)
+    @JoinColumn()
+    customer: Customer;
 
 }

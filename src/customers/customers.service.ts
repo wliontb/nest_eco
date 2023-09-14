@@ -74,6 +74,12 @@ export class CustomersService {
 
     customer.firstName = updateCustomerDto.firstName;
     customer.lastName = updateCustomerDto.lastName;
+    customer.nation1 = updateCustomerDto.nation1;
+    customer.city1 = updateCustomerDto.city1;
+    customer.district1 = updateCustomerDto.district1;
+    customer.nation2 = updateCustomerDto.nation2;
+    customer.city2 = updateCustomerDto.city2;
+    customer.district2 = updateCustomerDto.district2;
     customer.address1 = updateCustomerDto.address1;
     customer.address2 = updateCustomerDto.address2;
     customer.phone = updateCustomerDto.phone;

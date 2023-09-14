@@ -1,21 +1,33 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-export class AddGenderCol1694503429051 implements MigrationInterface {
-    name = 'AddGenderCol1694503429051'
+export class AddRelationCustomerInvoice1694689083943 implements MigrationInterface {
+    name = 'AddRelationCustomerInvoice1694689083943'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`ALTER TABLE \`customer\` ADD \`gender\` tinyint NOT NULL DEFAULT 1`);
+        await queryRunner.query(`ALTER TABLE \`invoice\` ADD \`customerId\` int NULL`);
         await queryRunner.query(`ALTER TABLE \`goods_category\` CHANGE \`deletedAt\` \`deletedAt\` datetime(6) NULL`);
+        await queryRunner.query(`ALTER TABLE \`customer\` CHANGE \`deletedAt\` \`deletedAt\` datetime(6) NULL`);
+        await queryRunner.query(`ALTER TABLE \`customer\` CHANGE \`firstName\` \`firstName\` varchar(255) NULL`);
+        await queryRunner.query(`ALTER TABLE \`customer\` CHANGE \`lastName\` \`lastName\` varchar(255) NULL`);
+        await queryRunner.query(`ALTER TABLE \`customer\` CHANGE \`nation1\` \`nation1\` varchar(255) NULL`);
+        await queryRunner.query(`ALTER TABLE \`customer\` CHANGE \`city1\` \`city1\` varchar(255) NULL`);
+        await queryRunner.query(`ALTER TABLE \`customer\` CHANGE \`address1\` \`address1\` varchar(255) NULL`);
+        await queryRunner.query(`ALTER TABLE \`customer\` CHANGE \`district1\` \`district1\` varchar(255) NULL`);
+        await queryRunner.query(`ALTER TABLE \`customer\` CHANGE \`nation2\` \`nation2\` varchar(255) NULL`);
+        await queryRunner.query(`ALTER TABLE \`customer\` CHANGE \`city2\` \`city2\` varchar(255) NULL`);
+        await queryRunner.query(`ALTER TABLE \`customer\` CHANGE \`address2\` \`address2\` varchar(255) NULL`);
+        await queryRunner.query(`ALTER TABLE \`customer\` CHANGE \`district2\` \`district2\` varchar(255) NULL`);
+        await queryRunner.query(`ALTER TABLE \`customer\` CHANGE \`avatar\` \`avatar\` varchar(255) NULL`);
+        await queryRunner.query(`ALTER TABLE \`invoice\` CHANGE \`deletedAt\` \`deletedAt\` datetime(6) NULL`);
+        await queryRunner.query(`ALTER TABLE \`invoice_child\` DROP FOREIGN KEY \`FK_076c4f08a3e421d44878978d2af\``);
+        await queryRunner.query(`ALTER TABLE \`invoice_child\` DROP FOREIGN KEY \`FK_2de8bf244406b73bffbf01b123f\``);
+        await queryRunner.query(`ALTER TABLE \`invoice_child\` CHANGE \`deletedAt\` \`deletedAt\` datetime(6) NULL`);
+        await queryRunner.query(`ALTER TABLE \`invoice_child\` CHANGE \`productId\` \`productId\` int NULL`);
+        await queryRunner.query(`ALTER TABLE \`invoice_child\` CHANGE \`invoiceId\` \`invoiceId\` int NULL`);
         await queryRunner.query(`ALTER TABLE \`productdetail\` CHANGE \`deletedAt\` \`deletedAt\` datetime(6) NULL`);
         await queryRunner.query(`ALTER TABLE \`productprop\` DROP FOREIGN KEY \`FK_980b1ed324498ac3e048f0448e6\``);
         await queryRunner.query(`ALTER TABLE \`productprop\` CHANGE \`deletedAt\` \`deletedAt\` datetime(6) NULL`);
         await queryRunner.query(`ALTER TABLE \`productprop\` CHANGE \`productId\` \`productId\` int NULL`);
-        await queryRunner.query(`ALTER TABLE \`customer\` CHANGE \`deletedAt\` \`deletedAt\` datetime(6) NULL`);
-        await queryRunner.query(`ALTER TABLE \`customer\` CHANGE \`firstName\` \`firstName\` varchar(255) NULL`);
-        await queryRunner.query(`ALTER TABLE \`customer\` CHANGE \`lastName\` \`lastName\` varchar(255) NULL`);
-        await queryRunner.query(`ALTER TABLE \`customer\` CHANGE \`address1\` \`address1\` varchar(255) NULL`);
-        await queryRunner.query(`ALTER TABLE \`customer\` CHANGE \`address2\` \`address2\` varchar(255) NULL`);
-        await queryRunner.query(`ALTER TABLE \`customer\` CHANGE \`avatar\` \`avatar\` varchar(255) NULL`);
         await queryRunner.query(`ALTER TABLE \`payment\` DROP FOREIGN KEY \`FK_a3772a91be111b4b6a8a496fffa\``);
         await queryRunner.query(`ALTER TABLE \`payment\` CHANGE \`deletedAt\` \`deletedAt\` datetime(6) NULL`);
         await queryRunner.query(`ALTER TABLE \`payment\` CHANGE \`supplierId\` \`supplierId\` int NULL`);
@@ -39,6 +51,9 @@ export class AddGenderCol1694503429051 implements MigrationInterface {
         await queryRunner.query(`ALTER TABLE \`orderdetail\` CHANGE \`orderId\` \`orderId\` int NULL`);
         await queryRunner.query(`ALTER TABLE \`orderdetail\` CHANGE \`shipperId\` \`shipperId\` int NULL`);
         await queryRunner.query(`ALTER TABLE \`orderdetail\` CHANGE \`productId\` \`productId\` int NULL`);
+        await queryRunner.query(`ALTER TABLE \`invoice\` ADD CONSTRAINT \`FK_925aa26ea12c28a6adb614445ee\` FOREIGN KEY (\`customerId\`) REFERENCES \`customer\`(\`id\`) ON DELETE NO ACTION ON UPDATE NO ACTION`);
+        await queryRunner.query(`ALTER TABLE \`invoice_child\` ADD CONSTRAINT \`FK_076c4f08a3e421d44878978d2af\` FOREIGN KEY (\`productId\`) REFERENCES \`product\`(\`id\`) ON DELETE NO ACTION ON UPDATE NO ACTION`);
+        await queryRunner.query(`ALTER TABLE \`invoice_child\` ADD CONSTRAINT \`FK_2de8bf244406b73bffbf01b123f\` FOREIGN KEY (\`invoiceId\`) REFERENCES \`invoice\`(\`id\`) ON DELETE NO ACTION ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE \`productprop\` ADD CONSTRAINT \`FK_980b1ed324498ac3e048f0448e6\` FOREIGN KEY (\`productId\`) REFERENCES \`product\`(\`id\`) ON DELETE NO ACTION ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE \`payment\` ADD CONSTRAINT \`FK_a3772a91be111b4b6a8a496fffa\` FOREIGN KEY (\`supplierId\`) REFERENCES \`supplier\`(\`id\`) ON DELETE NO ACTION ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE \`supplier\` ADD CONSTRAINT \`FK_b28bf31339aa7f2a202bb8146cd\` FOREIGN KEY (\`customerId\`) REFERENCES \`customer\`(\`id\`) ON DELETE NO ACTION ON UPDATE NO ACTION`);
@@ -60,6 +75,9 @@ export class AddGenderCol1694503429051 implements MigrationInterface {
         await queryRunner.query(`ALTER TABLE \`supplier\` DROP FOREIGN KEY \`FK_b28bf31339aa7f2a202bb8146cd\``);
         await queryRunner.query(`ALTER TABLE \`payment\` DROP FOREIGN KEY \`FK_a3772a91be111b4b6a8a496fffa\``);
         await queryRunner.query(`ALTER TABLE \`productprop\` DROP FOREIGN KEY \`FK_980b1ed324498ac3e048f0448e6\``);
+        await queryRunner.query(`ALTER TABLE \`invoice_child\` DROP FOREIGN KEY \`FK_2de8bf244406b73bffbf01b123f\``);
+        await queryRunner.query(`ALTER TABLE \`invoice_child\` DROP FOREIGN KEY \`FK_076c4f08a3e421d44878978d2af\``);
+        await queryRunner.query(`ALTER TABLE \`invoice\` DROP FOREIGN KEY \`FK_925aa26ea12c28a6adb614445ee\``);
         await queryRunner.query(`ALTER TABLE \`orderdetail\` CHANGE \`productId\` \`productId\` int NULL DEFAULT 'NULL'`);
         await queryRunner.query(`ALTER TABLE \`orderdetail\` CHANGE \`shipperId\` \`shipperId\` int NULL DEFAULT 'NULL'`);
         await queryRunner.query(`ALTER TABLE \`orderdetail\` CHANGE \`orderId\` \`orderId\` int NULL DEFAULT 'NULL'`);
@@ -83,18 +101,30 @@ export class AddGenderCol1694503429051 implements MigrationInterface {
         await queryRunner.query(`ALTER TABLE \`payment\` CHANGE \`supplierId\` \`supplierId\` int NULL DEFAULT 'NULL'`);
         await queryRunner.query(`ALTER TABLE \`payment\` CHANGE \`deletedAt\` \`deletedAt\` datetime(6) NULL DEFAULT 'NULL'`);
         await queryRunner.query(`ALTER TABLE \`payment\` ADD CONSTRAINT \`FK_a3772a91be111b4b6a8a496fffa\` FOREIGN KEY (\`supplierId\`) REFERENCES \`supplier\`(\`id\`) ON DELETE NO ACTION ON UPDATE NO ACTION`);
-        await queryRunner.query(`ALTER TABLE \`customer\` CHANGE \`avatar\` \`avatar\` varchar(255) NULL DEFAULT 'NULL'`);
-        await queryRunner.query(`ALTER TABLE \`customer\` CHANGE \`address2\` \`address2\` varchar(255) NULL DEFAULT 'NULL'`);
-        await queryRunner.query(`ALTER TABLE \`customer\` CHANGE \`address1\` \`address1\` varchar(255) NULL DEFAULT 'NULL'`);
-        await queryRunner.query(`ALTER TABLE \`customer\` CHANGE \`lastName\` \`lastName\` varchar(255) NULL DEFAULT 'NULL'`);
-        await queryRunner.query(`ALTER TABLE \`customer\` CHANGE \`firstName\` \`firstName\` varchar(255) NULL DEFAULT 'NULL'`);
-        await queryRunner.query(`ALTER TABLE \`customer\` CHANGE \`deletedAt\` \`deletedAt\` datetime(6) NULL DEFAULT 'NULL'`);
         await queryRunner.query(`ALTER TABLE \`productprop\` CHANGE \`productId\` \`productId\` int NULL DEFAULT 'NULL'`);
         await queryRunner.query(`ALTER TABLE \`productprop\` CHANGE \`deletedAt\` \`deletedAt\` datetime(6) NULL DEFAULT 'NULL'`);
         await queryRunner.query(`ALTER TABLE \`productprop\` ADD CONSTRAINT \`FK_980b1ed324498ac3e048f0448e6\` FOREIGN KEY (\`productId\`) REFERENCES \`product\`(\`id\`) ON DELETE NO ACTION ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE \`productdetail\` CHANGE \`deletedAt\` \`deletedAt\` datetime(6) NULL DEFAULT 'NULL'`);
+        await queryRunner.query(`ALTER TABLE \`invoice_child\` CHANGE \`invoiceId\` \`invoiceId\` int NULL DEFAULT 'NULL'`);
+        await queryRunner.query(`ALTER TABLE \`invoice_child\` CHANGE \`productId\` \`productId\` int NULL DEFAULT 'NULL'`);
+        await queryRunner.query(`ALTER TABLE \`invoice_child\` CHANGE \`deletedAt\` \`deletedAt\` datetime(6) NULL DEFAULT 'NULL'`);
+        await queryRunner.query(`ALTER TABLE \`invoice_child\` ADD CONSTRAINT \`FK_2de8bf244406b73bffbf01b123f\` FOREIGN KEY (\`invoiceId\`) REFERENCES \`invoice\`(\`id\`) ON DELETE NO ACTION ON UPDATE NO ACTION`);
+        await queryRunner.query(`ALTER TABLE \`invoice_child\` ADD CONSTRAINT \`FK_076c4f08a3e421d44878978d2af\` FOREIGN KEY (\`productId\`) REFERENCES \`product\`(\`id\`) ON DELETE NO ACTION ON UPDATE NO ACTION`);
+        await queryRunner.query(`ALTER TABLE \`invoice\` CHANGE \`deletedAt\` \`deletedAt\` datetime(6) NULL DEFAULT 'NULL'`);
+        await queryRunner.query(`ALTER TABLE \`customer\` CHANGE \`avatar\` \`avatar\` varchar(255) NULL DEFAULT 'NULL'`);
+        await queryRunner.query(`ALTER TABLE \`customer\` CHANGE \`district2\` \`district2\` varchar(255) NULL DEFAULT 'NULL'`);
+        await queryRunner.query(`ALTER TABLE \`customer\` CHANGE \`address2\` \`address2\` varchar(255) NULL DEFAULT 'NULL'`);
+        await queryRunner.query(`ALTER TABLE \`customer\` CHANGE \`city2\` \`city2\` varchar(255) NULL DEFAULT 'NULL'`);
+        await queryRunner.query(`ALTER TABLE \`customer\` CHANGE \`nation2\` \`nation2\` varchar(255) NULL DEFAULT 'NULL'`);
+        await queryRunner.query(`ALTER TABLE \`customer\` CHANGE \`district1\` \`district1\` varchar(255) NULL DEFAULT 'NULL'`);
+        await queryRunner.query(`ALTER TABLE \`customer\` CHANGE \`address1\` \`address1\` varchar(255) NULL DEFAULT 'NULL'`);
+        await queryRunner.query(`ALTER TABLE \`customer\` CHANGE \`city1\` \`city1\` varchar(255) NULL DEFAULT 'NULL'`);
+        await queryRunner.query(`ALTER TABLE \`customer\` CHANGE \`nation1\` \`nation1\` varchar(255) NULL DEFAULT 'NULL'`);
+        await queryRunner.query(`ALTER TABLE \`customer\` CHANGE \`lastName\` \`lastName\` varchar(255) NULL DEFAULT 'NULL'`);
+        await queryRunner.query(`ALTER TABLE \`customer\` CHANGE \`firstName\` \`firstName\` varchar(255) NULL DEFAULT 'NULL'`);
+        await queryRunner.query(`ALTER TABLE \`customer\` CHANGE \`deletedAt\` \`deletedAt\` datetime(6) NULL DEFAULT 'NULL'`);
         await queryRunner.query(`ALTER TABLE \`goods_category\` CHANGE \`deletedAt\` \`deletedAt\` datetime(6) NULL DEFAULT 'NULL'`);
-        await queryRunner.query(`ALTER TABLE \`customer\` DROP COLUMN \`gender\``);
+        await queryRunner.query(`ALTER TABLE \`invoice\` DROP COLUMN \`customerId\``);
     }
 
 }

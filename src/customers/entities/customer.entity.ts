@@ -1,5 +1,6 @@
 import CustomBaseEntity from "src/database/entities/base.entity";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Invoice } from "src/invoice/entities/invoice.entity";
+import { Column, Entity, JoinColumn, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Customer extends CustomBaseEntity {
@@ -19,12 +20,42 @@ export class Customer extends CustomBaseEntity {
     @Column({
         nullable: true
     })
+    nation1: string;
+
+    @Column({
+        nullable: true
+    })
+    city1: string;
+
+    @Column({
+        nullable: true
+    })
     address1: string;
 
     @Column({
         nullable: true
     })
+    district1: string;
+
+    @Column({
+        nullable: true
+    })
+    nation2: string;
+
+    @Column({
+        nullable: true
+    })
+    city2: string;
+
+    @Column({
+        nullable: true
+    })
     address2: string;
+
+    @Column({
+        nullable: true
+    })
+    district2: string;
 
     @Column()
     phone: string;
@@ -61,4 +92,8 @@ export class Customer extends CustomBaseEntity {
         default: true
     })
     gender: boolean;
+
+    @OneToMany(() => Invoice, (invoice) => invoice.customer)
+    @JoinColumn()
+    invoices: Invoice[];
 }

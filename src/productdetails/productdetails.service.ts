@@ -23,12 +23,7 @@ export class ProductdetailsService {
     })
 
     const prodDetail = this.prodDetailRepository.create();
-    prodDetail.nameDetail = createProductdetailDto.nameDetail;
     prodDetail.picture = createProductdetailDto.picture;
-    prodDetail.price = +createProductdetailDto.price;
-    prodDetail.discount = +createProductdetailDto.discount;
-    prodDetail.discountAvailable = !!createProductdetailDto.discountAvailable;
-    prodDetail.qty = +createProductdetailDto.qty;
     prodDetail.product = product;
 
     return await this.prodDetailRepository.save(prodDetail);
@@ -37,7 +32,7 @@ export class ProductdetailsService {
   async findAll(productQuery?: any) {
     const queryOptions: any = {
       order: {
-        id: 'DESC',
+        id: 'ASC',
       },
     };
 
@@ -75,13 +70,8 @@ export class ProductdetailsService {
       }
     })
 
-    prodDetail.nameDetail = updateProductdetailDto.nameDetail;
     prodDetail.picture = updateProductdetailDto.picture;
-    prodDetail.price = +updateProductdetailDto.price;
-    prodDetail.qty = +updateProductdetailDto.qty;
     prodDetail.product = product;
-    prodDetail.discount = +updateProductdetailDto.discount;
-    prodDetail.discountAvailable = !!updateProductdetailDto.discountAvailable;
 
     return await this.prodDetailRepository.save(prodDetail);
 

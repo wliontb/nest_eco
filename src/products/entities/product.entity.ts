@@ -1,6 +1,5 @@
 import { Category } from "src/category/entities/category.entity";
 import CustomBaseEntity from "src/database/entities/base.entity";
-import { Invoice } from "src/invoice/entities/invoice.entity";
 import { InvoiceChild } from "src/invoice_child/entities/invoice_child.entity";
 import { Productdetail } from "src/productdetails/entities/productdetail.entity";
 import { Productprop } from "src/productprops/entities/productprop.entity";
@@ -35,6 +34,11 @@ export class Product extends CustomBaseEntity {
         default: false
     })
     discountAvailable: boolean;
+
+    @Column({
+        default: 0
+    })
+    qty: number;
 
     @Column({
         default: true
@@ -75,6 +79,6 @@ export class Product extends CustomBaseEntity {
     @JoinColumn()
     productprops: Productprop[]
 
-    @OneToOne(() => InvoiceChild, (invoiceChild) => invoiceChild.product)
-    invoiceChild: InvoiceChild;
+    @OneToMany(() => InvoiceChild, (invoiceChild) => invoiceChild.product)
+    invoiceChild: InvoiceChild[];
 }
