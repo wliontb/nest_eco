@@ -33,4 +33,7 @@ export class CreateProductDto {
 
     @IsBooleanString()
     is_flashsale: string;
+
+    @IsNumberString()
+    qty: string;
 }

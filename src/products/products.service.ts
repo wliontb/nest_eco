@@ -43,6 +43,7 @@ export class ProductsService {
     product.supplier = supplier;
     product.isFlashsale = !!createProductDto.is_flashsale;
     product.isTrending = !!createProductDto.is_trending;
+    product.qty = +createProductDto.qty;
 
     return await this.productRepository.save(product);
   }
@@ -131,6 +132,7 @@ export class ProductsService {
     product.category = category;
     product.isFlashsale = !!updateProductDto.is_flashsale;
     product.isTrending = !!updateProductDto.is_trending;
+    product.qty = +updateProductDto.qty;
     
     return await this.productRepository.save(product);
   }
