@@ -43,6 +43,9 @@ export class ProductpropsService {
           id: productQuery.product
         }
       };
+      if (productQuery.limit) {
+        queryOptions.take = productQuery.limit;
+      }
     }
 
     const prodProps = await this.productPropRepository.find(queryOptions);
