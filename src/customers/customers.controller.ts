@@ -3,6 +3,8 @@ import { CustomersService } from './customers.service';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 import { UpdateCustomerDto } from './dto/update-customer.dto';
 import { LoginCustomerDto } from './dto/login-customer.dto';
+import { CreateFullCustomerDto } from './dto/create-full-customer.dto';
+import { UpdateFullCustomerDto } from './dto/update-full-customer.dto';
 
 @Controller('customers')
 export class CustomersController {
@@ -29,7 +31,7 @@ export class CustomersController {
   }
 
   @Post()
-  async create(@Body() createCustomerDto: CreateCustomerDto) {
+  async create(@Body() createCustomerDto: CreateFullCustomerDto) {
     const customer = await this.customersService.create(createCustomerDto);
 
     return {
@@ -39,8 +41,12 @@ export class CustomersController {
   }
 
   @Get()
-  findAll() {
-    return this.customersService.findAll();
+  async findAll() {
+    const customers = await this.customersService.findAll();
+    return {
+      result: customers,
+      status: 'success'
+    }
   }
 
   @Get(':id')
@@ -63,8 +69,22 @@ export class CustomersController {
     }
   }
 
+  @Patch('/update-full/:id')
+  async updateFull(@Param('id') id: string, @Body() updateCustomerDto: UpdateFullCustomerDto) {
+    const customer = await this.customersService.updateFull(+id, updateCustomerDto);
+
+    return {
+      result: customer,
+      status: 'success'
+    }
+  }
+
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.customersService.remove(+id);
+  async remove(@Param('id') id: string) {
+    const customer = await this.customersService.remove(+id);
+    return {
+      result: customer,
+      status: 'success'
+    }
   }
 }

@@ -18,7 +18,7 @@ export class Invoice extends CustomBaseEntity {
     full_name: string;
 
     @Column()
-    phone: number;
+    phone: string;
 
     @Column()
     nation: string;

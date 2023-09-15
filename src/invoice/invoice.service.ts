@@ -3,7 +3,7 @@ import { CreateInvoiceDto } from './dto/create-invoice.dto';
 import { UpdateInvoiceDto } from './dto/update-invoice.dto';
 import { InvoiceChildDto, createCheckoutDto } from './dto/create-checkout.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Invoice } from './entities/invoice.entity';
+import { Invoice, InvoiceStatus } from './entities/invoice.entity';
 import { Repository } from 'typeorm';
 import { InvoiceChild } from 'src/invoice_child/entities/invoice_child.entity';
 import { Product } from 'src/products/entities/product.entity';
@@ -26,6 +26,38 @@ export class InvoiceService {
     return 'This action adds a new invoice';
   }
 
+  async approve(id: number) {
+    const invoice = await this.invoiceRepository.findOne({
+      where: {id},
+      relations: ['invoiceChild', 'invoiceChild.product']
+    })
+    invoice.status = InvoiceStatus.APPROVE;
+
+    for(const ivc of invoice.invoiceChild) {
+      const product = await this.productRepository.findOne({
+        where: {
+          id: ivc.product.id
+        }
+      })
+
+      product.qty-=ivc.qty;
+
+      await this.productRepository.save(product);
+    }
+
+    return await this.invoiceRepository.save(invoice);
+  }
+
+  async reject(id: number) {
+    const invoice = await this.invoiceRepository.findOne({
+      where: {id}
+    })
+    
+    invoice.status = InvoiceStatus.REJECT;
+
+    return await this.invoiceRepository.save(invoice);
+  }
+
   async createCheckout(createCheckoutDto: createCheckoutDto) {
     const customer = await this.customerRepository.findOne({
       where: {
@@ -35,7 +67,7 @@ export class InvoiceService {
 
     const invoice = this.invoiceRepository.create();
     invoice.full_name = createCheckoutDto.full_name;
-    invoice.phone = +createCheckoutDto.phone;
+    invoice.phone = createCheckoutDto.phone;
     invoice.nation = createCheckoutDto.nation;
     invoice.city = createCheckoutDto.city;
     invoice.district = createCheckoutDto.district;
@@ -94,12 +126,32 @@ export class InvoiceService {
     return await this.invoiceRepository.find(queryOptions);
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} invoice`;
+  async findOne(id: number) {
+    const invoice = await this.invoiceRepository.findOne({
+      where: {
+        id
+      },
+      relations: ['customer', 'invoiceChild', 'invoiceChild.product'],
+    })
+
+    return invoice;
   }
 
-  update(id: number, updateInvoiceDto: UpdateInvoiceDto) {
-    return `This action updates a #${id} invoice`;
+  async update(id: number, updateInvoiceDto: UpdateInvoiceDto) {
+    const invoice = await this.invoiceRepository.findOne({
+      where: {id}
+    })
+
+    invoice.full_name = updateInvoiceDto.full_name;
+    invoice.nation = updateInvoiceDto.nation;
+    invoice.city = updateInvoiceDto.city;
+    invoice.district = updateInvoiceDto.district;
+    invoice.address = updateInvoiceDto.address;
+    invoice.phone = updateInvoiceDto.phone;
+    invoice.shipping = JSON.parse(updateInvoiceDto.shipping);
+    invoice.payment = JSON.parse(updateInvoiceDto.payment);
+
+    return await this.invoiceRepository.save(invoice);
   }
 
   remove(id: number) {

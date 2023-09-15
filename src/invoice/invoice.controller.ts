@@ -33,13 +33,43 @@ export class InvoiceController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.invoiceService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    const invoice = await this.invoiceService.findOne(+id);
+
+    return {
+      result: invoice,
+      status: 'success'
+    }
+  }
+
+  @Patch('/approve/:id')
+  async approveInvoice(@Param('id') id: number) {
+    const invoice = await this.invoiceService.approve(id);
+
+    return {
+      result: invoice,
+      status: 'success'
+    }
+  }
+
+  @Patch('/reject/:id')
+  async rejectInvoice(@Param('id') id: number) {
+    const invoice = await this.invoiceService.reject(id);
+
+    return {
+      result: invoice,
+      status: 'success'
+    }
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateInvoiceDto: UpdateInvoiceDto) {
-    return this.invoiceService.update(+id, updateInvoiceDto);
+  async update(@Param('id') id: string, @Body() updateInvoiceDto: UpdateInvoiceDto) {
+    const invoice = await this.invoiceService.update(+id, updateInvoiceDto);
+
+    return {
+      result: invoice,
+      status: 'success'
+    }
   }
 
   @Delete(':id')
