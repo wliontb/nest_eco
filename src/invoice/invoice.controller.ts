@@ -73,7 +73,11 @@ export class InvoiceController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.invoiceService.remove(+id);
+  async remove(@Param('id') id: string) {
+    const invoice = await this.invoiceService.remove(+id);
+    return {
+      result: invoice,
+      status: 'success'
+    }
   }
 }

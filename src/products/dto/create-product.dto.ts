@@ -16,11 +16,11 @@ export class CreateProductDto {
     @IsNumberString()
     discount: number;
 
-    @IsNumberString()
-    discount_available: number;
+    @IsBooleanString()
+    discount_available: string;
 
-    @IsNumberString()
-    product_available: number;
+    @IsBooleanString()
+    product_available: string;
 
     @IsNumberString()
     supplier_id: number;

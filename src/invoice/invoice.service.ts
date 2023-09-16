@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateInvoiceDto } from './dto/create-invoice.dto';
 import { UpdateInvoiceDto } from './dto/update-invoice.dto';
 import { InvoiceChildDto, createCheckoutDto } from './dto/create-checkout.dto';
@@ -154,7 +154,18 @@ export class InvoiceService {
     return await this.invoiceRepository.save(invoice);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} invoice`;
+  async remove(id: number) {
+    const invoice = await this.invoiceRepository.findOne({
+      where: {
+        id
+      }
+    })
+
+    const status = invoice.status;
+    if(status == InvoiceStatus.PENDING)
+      throw new BadRequestException('Hóa đơn chưa được xử lý');
+    else
+      return await this.invoiceRepository.softRemove(invoice);
+    
   }
 }

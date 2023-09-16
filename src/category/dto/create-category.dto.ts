@@ -1,4 +1,4 @@
-import { IsNumber, IsNumberString, IsString } from "class-validator";
+import { IsBooleanString, IsNumber, IsNumberString, IsString } from "class-validator";
 
 export class CreateCategoryDto {
     @IsString()
@@ -10,8 +10,8 @@ export class CreateCategoryDto {
     @IsString()
     picture: string;
 
-    @IsNumberString()
-    active: number;
+    @IsBooleanString()
+    active: string;
 
     @IsNumberString()
     goodCateId: number;

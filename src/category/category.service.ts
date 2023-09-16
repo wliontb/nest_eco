@@ -100,7 +100,7 @@ export class CategoryService {
       category.categoryName = updateCategoryDto.categoryName;
       category.description = updateCategoryDto.description;
       category.picture = updateCategoryDto.picture;
-      category.active = !!updateCategoryDto.active;
+      category.active = JSON.parse(updateCategoryDto.active);
       category.goodCategory = goodCate;
 
       return await this.categoryRepository.save(category);
