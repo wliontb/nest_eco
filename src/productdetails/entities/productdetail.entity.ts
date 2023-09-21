@@ -8,7 +8,7 @@ export class Productdetail extends CustomBaseEntity {
     id: number;
 
     @Column({
-        length: 50
+        length: 500
     })
     picture: string;
 
